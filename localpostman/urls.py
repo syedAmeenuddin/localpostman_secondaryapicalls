@@ -16,9 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from localpostman.views import jarvis
+from localpostman.views import checkjarvis_user, create_user, jarvis
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('jarvis/', jarvis, name='jarvis'),
+    path('jarvisCheckUser/',checkjarvis_user,name='checkjarvis_user'),
+    path('jarvisCreateUser/',create_user,name="create_user")
 ]
