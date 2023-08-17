@@ -12,3 +12,22 @@ class jarvis_requested_access(models.Model):
     message = models.CharField(max_length=100)
     def __str__(self):
         return self.username
+    
+class jarvis_gptaccess(models.Model):
+    user = models.ForeignKey(jarvis_user,on_delete=models.CASCADE,blank=False,null=False)
+    access = models.BooleanField(default=False, blank=False)
+    def __str__(self):
+        return str(self.user)
+class jarvis_musicaccess(models.Model):
+    user = models.ForeignKey(jarvis_user,on_delete=models.CASCADE,blank=False,null=False)
+    access = models.BooleanField(default=False, blank=False)
+    def __str__(self):
+        return str(self.user)
+class jarvis_videoaccess(models.Model):
+    user = models.ForeignKey(jarvis_user,on_delete=models.CASCADE,blank=False,null=False)
+    access = models.BooleanField(default=False, blank=False)
+    def __str__(self):
+        return str(self.user)
+
+  
+

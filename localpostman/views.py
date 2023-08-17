@@ -2,7 +2,7 @@ from django.http import JsonResponse
 import json
 from django.contrib.auth import authenticate
 from django.views.decorators.csrf import csrf_exempt
-from localpostman.models import jarvis_user
+from localpostman.models import jarvis_gptaccess, jarvis_musicaccess, jarvis_user, jarvis_videoaccess
 from localpostman.models import jarvis_requested_access
 from localpostman.settings import OPENAIKEY
 import openai
@@ -55,6 +55,39 @@ def create_user(request):
         return JsonResponse({'response': True})
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
+    
+@csrf_exempt    
+def checkjarvis_gptaccess(request):
+    try:
+        data = json.loads(request.body)
+        v_user_name = data.get('UserName', 'N')
+        usr = jarvis_user.objects.get(username = v_user_name)
+        Isaccess = jarvis_gptaccess.objects.get(user = usr)        
+        return JsonResponse({'response': Isaccess.access})
+    except Exception as e:
+        return JsonResponse({'response': str(e)}, status=400)
+
+@csrf_exempt    
+def checkjarvis_videoaccess(request):
+    try:
+        data = json.loads(request.body)
+        v_user_name = data.get('UserName', 'N')
+        usr = jarvis_user.objects.get(username = v_user_name)
+        Isaccess = jarvis_videoaccess.objects.get(user = usr)        
+        return JsonResponse({'response': Isaccess.access})
+    except Exception as e:
+        return JsonResponse({'response': str(e)}, status=400)
+
+@csrf_exempt    
+def checkjarvis_musicaccess(request):
+    try:
+        data = json.loads(request.body)
+        v_user_name = data.get('UserName', 'N')
+        usr = jarvis_user.objects.get(username = v_user_name)
+        Isaccess = jarvis_musicaccess.objects.get(user = usr)        
+        return JsonResponse({'response': Isaccess.access})
+    except Exception as e:
+        return JsonResponse({'response': str(e)}, status=400)
     
     
    
