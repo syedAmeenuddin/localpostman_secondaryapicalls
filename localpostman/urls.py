@@ -16,8 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from localpostman.views import checkjarvis_user, create_user, jarvis,checkjarvis_gptaccess,checkjarvis_musicaccess,checkjarvis_videoaccess
+from localpostman import settings
+from localpostman.views import checkjarvis_user, create_user, get_musics, jarvis,checkjarvis_gptaccess,checkjarvis_musicaccess,checkjarvis_videoaccess
 
+from django.conf.urls.static import static
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('jarvis/', jarvis, name='jarvis'),
@@ -26,4 +28,7 @@ urlpatterns = [
     path('checkjarvis_gptaccess/', checkjarvis_gptaccess, name="checkjarvis_gptaccess"),
     path('checkjarvis_musicaccess/', checkjarvis_musicaccess, name="checkjarvis_musicaccess"),
     path('checkjarvis_videoaccess/', checkjarvis_videoaccess, name="checkjarvis_videoaccess"),
+    path('getmusic/',get_musics,name="get_musics"),
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

@@ -28,6 +28,12 @@ class jarvis_videoaccess(models.Model):
     access = models.BooleanField(default=False, blank=False)
     def __str__(self):
         return str(self.user)
+class Music(models.Model):
+    user = models.ForeignKey(jarvis_user,on_delete=models.CASCADE,blank=False,null=False)
+    title = models.CharField(max_length=200)
+    file = models.FileField(upload_to='listening/')
 
+    def __str__(self):
+        return self.title
   
 

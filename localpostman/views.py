@@ -2,10 +2,11 @@ from django.http import JsonResponse
 import json
 from django.contrib.auth import authenticate
 from django.views.decorators.csrf import csrf_exempt
-from localpostman.models import jarvis_gptaccess, jarvis_musicaccess, jarvis_user, jarvis_videoaccess
+from localpostman.models import Music, jarvis_gptaccess, jarvis_musicaccess, jarvis_user, jarvis_videoaccess
 from localpostman.models import jarvis_requested_access
 from localpostman.settings import OPENAIKEY
 import openai
+from .serializers import MusicSerializer 
 
 openai.api_key = OPENAIKEY
 
@@ -88,6 +89,25 @@ def checkjarvis_musicaccess(request):
         return JsonResponse({'response': Isaccess.access})
     except Exception as e:
         return JsonResponse({'response': str(e)}, status=400)
+@csrf_exempt   
+def googlebard(request):
+    try:
+        pass
+    except Exception as e:
+        return JsonResponse({'response':str(e)},status=400)    
     
+@csrf_exempt   
+def get_musics(request):
+    try:
+        data = json.loads(request.body)
+        v_user_name = data.get('UserName', 'N')
+        usr = jarvis_user.objects.get(username = v_user_name)
+        print(usr)
+        MusicList = Music.objects.all()
+        print(MusicList)
+        print(MusicSerializer(MusicList, many=True).data)
+        return JsonResponse({'response':MusicSerializer(MusicList, many=True).data})
+    except Exception as e:
+        return JsonResponse({'response':str(e)},status=400)    
     
    
